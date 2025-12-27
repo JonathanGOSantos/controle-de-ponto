@@ -1,7 +1,9 @@
 package dev.santosjonathan.controle_de_ponto.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
@@ -13,6 +15,8 @@ import java.util.Set;
 import java.util.UUID;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "usuarios")
 @SQLDelete(sql = "UPDATE usuarios SET deletado_em = NOW() WHERE id = ?")

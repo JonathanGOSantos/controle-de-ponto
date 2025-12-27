@@ -1,7 +1,9 @@
 package dev.santosjonathan.controle_de_ponto.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
@@ -12,6 +14,8 @@ import java.time.Instant;
 import java.util.UUID;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "membros_equipes")
 @SQLDelete(sql = "UPDATE membros_equipes SET deletado_em = NOW() WHERE id = ?")
@@ -33,7 +37,7 @@ public class MembroEquipe implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_usuario")
-    private Usuario usuario;
+    private Usuario membro;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_equipe")
