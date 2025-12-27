@@ -1,4 +1,4 @@
-package dev.santosjonathan.controle_de_ponto.entity;
+package dev.santosjonathan.controle_de_ponto.infrastructure.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -11,24 +11,34 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.Set;
 import java.util.UUID;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "execucoes")
-@SQLDelete(sql = "UPDATE execucoes SET deletado_em = NOW() WHERE id = ?")
+@Table(name = "projetos")
+@SQLDelete(sql = "UPDATE projetos SET deletado_em = NOW() WHERE id = ?")
 @SQLRestriction("deletado_em IS NULL")
-public class Execucao implements Serializable {
+public class Projeto implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @Column(nullable = false)
-    private Instant entrada;
+    private String nome;
 
-    private Instant saida;
+    @Column(nullable = false)
+    private String descricao;
+
+    @Column(nullable = false)
+    private Instant dataInicio;
+
+    @Column(nullable = false)
+    private Instant dataTermino;
+
+    private Instant dataTerminoPrevista;
 
     @CreationTimestamp
     private Instant criadoEm;
@@ -39,10 +49,12 @@ public class Execucao implements Serializable {
     private Instant deletadoEm;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_usuario")
-    private Usuario usuario;
+    @JoinColumn(name = "id_responsavel")
+    private Usuario responsavel;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_projeto")
-    private Projeto projeto;
+    @OneToMany(mappedBy = "projeto", fetch = FetchType.LAZY)
+    private Set<ProjetoEquipe> projetosEquipes;
+
+    @OneToMany(mappedBy = "projeto", fetch = FetchType.LAZY)
+    private Set<Execucao> execucoes;
 }

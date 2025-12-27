@@ -1,4 +1,4 @@
-package dev.santosjonathan.controle_de_ponto.entity;
+package dev.santosjonathan.controle_de_ponto.infrastructure.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -11,25 +11,21 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.Set;
 import java.util.UUID;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "perfis")
-@SQLDelete(sql = "UPDATE perfis SET deletado_em = NOW() WHERE id = ?")
+@Table(name = "membros_equipes")
+@SQLDelete(sql = "UPDATE membros_equipes SET deletado_em = NOW() WHERE id = ?")
 @SQLRestriction("deletado_em IS NULL")
-public class Perfil implements Serializable {
+public class MembroEquipe implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(unique = true, nullable = false)
-    private String nome;
-
-    private String descricao;
+    private Boolean responsavel;
 
     @CreationTimestamp
     private Instant criadoEm;
@@ -39,6 +35,11 @@ public class Perfil implements Serializable {
 
     private Instant deletadoEm;
 
-    @OneToMany(mappedBy = "perfil", fetch = FetchType.LAZY)
-    private Set<Usuario> usuarios;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_usuario")
+    private Usuario membro;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_equipe")
+    private Equipe equipe;
 }

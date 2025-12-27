@@ -1,4 +1,4 @@
-package dev.santosjonathan.controle_de_ponto.entity;
+package dev.santosjonathan.controle_de_ponto.infrastructure.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -18,25 +18,16 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "usuarios")
-@SQLDelete(sql = "UPDATE usuarios SET deletado_em = NOW() WHERE id = ?")
+@Table(name = "equipes")
+@SQLDelete(sql = "UPDATE equipes SET deletado_em = NOW() WHERE id = ?")
 @SQLRestriction("deletado_em IS NULL")
-public class Usuario implements Serializable {
+public class Equipe implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @Column(nullable = false)
     private String nome;
-
-    @Column(nullable = false, unique = true)
-    private String email;
-
-    @Column(nullable = false, unique = true)
-    private String documento;
-
-    @Column(nullable = false)
-    private String senha;
 
     @CreationTimestamp
     private Instant criadoEm;
@@ -46,16 +37,9 @@ public class Usuario implements Serializable {
 
     private Instant deletadoEm;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_perfil")
-    private Perfil perfil;
-
-    @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "equipe", fetch = FetchType.LAZY)
     private Set<MembroEquipe> membrosEquipes;
 
-    @OneToMany(mappedBy = "responsavel", fetch = FetchType.LAZY)
-    private Set<Projeto> projetos;
-
-    @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
-    private Set<Execucao> execucoes;
+    @OneToMany(mappedBy = "equipe", fetch = FetchType.LAZY)
+    private Set<ProjetoEquipe> projetosEquipes;
 }

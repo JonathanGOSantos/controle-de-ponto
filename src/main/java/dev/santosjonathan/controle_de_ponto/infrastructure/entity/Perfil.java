@@ -1,4 +1,4 @@
-package dev.santosjonathan.controle_de_ponto.entity;
+package dev.santosjonathan.controle_de_ponto.infrastructure.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -18,16 +18,18 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "equipes")
-@SQLDelete(sql = "UPDATE equipes SET deletado_em = NOW() WHERE id = ?")
+@Table(name = "perfis")
+@SQLDelete(sql = "UPDATE perfis SET deletado_em = NOW() WHERE id = ?")
 @SQLRestriction("deletado_em IS NULL")
-public class Equipe implements Serializable {
+public class Perfil implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(nullable = false)
+    @Column(unique = true, nullable = false)
     private String nome;
+
+    private String descricao;
 
     @CreationTimestamp
     private Instant criadoEm;
@@ -37,9 +39,6 @@ public class Equipe implements Serializable {
 
     private Instant deletadoEm;
 
-    @OneToMany(mappedBy = "equipe", fetch = FetchType.LAZY)
-    private Set<MembroEquipe> membrosEquipes;
-
-    @OneToMany(mappedBy = "equipe", fetch = FetchType.LAZY)
-    private Set<ProjetoEquipe> projetosEquipes;
+    @OneToMany(mappedBy = "perfil", fetch = FetchType.LAZY)
+    private Set<Usuario> usuarios;
 }

@@ -1,4 +1,4 @@
-package dev.santosjonathan.controle_de_ponto.dto;
+package dev.santosjonathan.controle_de_ponto.business.dto;
 
 import java.time.Instant;
 import java.util.UUID;
