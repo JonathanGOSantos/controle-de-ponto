@@ -2,6 +2,8 @@ package dev.santosjonathan.controle_de_ponto.entity;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.io.Serializable;
@@ -11,6 +13,8 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "projetos")
+@SQLDelete(sql = "UPDATE projetos SET deletado_em = NOW() WHERE id = ?")
+@SQLRestriction("deletado_em IS NULL")
 public class Projeto implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
