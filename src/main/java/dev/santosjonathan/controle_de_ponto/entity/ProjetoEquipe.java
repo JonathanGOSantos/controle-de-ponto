@@ -1,6 +1,7 @@
 package dev.santosjonathan.controle_de_ponto.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
@@ -10,6 +11,7 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.util.UUID;
 
+@Data
 @Entity
 @Table(name = "projetos_equipes")
 @SQLDelete(sql = "UPDATE projetos_equipes SET deletado_em = NOW() WHERE id = ?")
