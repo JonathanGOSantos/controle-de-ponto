@@ -1,4 +1,4 @@
-package dev.santosjonathan.controle_de_ponto.entity;
+package dev.santosjonathan.controle_de_ponto.infrastructure.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -18,10 +18,10 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "projetos")
-@SQLDelete(sql = "UPDATE projetos SET deletado_em = NOW() WHERE id = ?")
+@Table(name = "usuarios")
+@SQLDelete(sql = "UPDATE usuarios SET deletado_em = NOW() WHERE id = ?")
 @SQLRestriction("deletado_em IS NULL")
-public class Projeto implements Serializable {
+public class Usuario implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
@@ -29,16 +29,14 @@ public class Projeto implements Serializable {
     @Column(nullable = false)
     private String nome;
 
-    @Column(nullable = false)
-    private String descricao;
+    @Column(nullable = false, unique = true)
+    private String email;
+
+    @Column(nullable = false, unique = true)
+    private String documento;
 
     @Column(nullable = false)
-    private Instant dataInicio;
-
-    @Column(nullable = false)
-    private Instant dataTermino;
-
-    private Instant dataTerminoPrevista;
+    private String senha;
 
     @CreationTimestamp
     private Instant criadoEm;
@@ -49,12 +47,15 @@ public class Projeto implements Serializable {
     private Instant deletadoEm;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_responsavel")
-    private Usuario responsavel;
+    @JoinColumn(name = "id_perfil")
+    private Perfil perfil;
 
-    @OneToMany(mappedBy = "projeto", fetch = FetchType.LAZY)
-    private Set<ProjetoEquipe> projetosEquipes;
+    @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
+    private Set<MembroEquipe> membrosEquipes;
 
-    @OneToMany(mappedBy = "projeto", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "responsavel", fetch = FetchType.LAZY)
+    private Set<Projeto> projetos;
+
+    @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
     private Set<Execucao> execucoes;
 }

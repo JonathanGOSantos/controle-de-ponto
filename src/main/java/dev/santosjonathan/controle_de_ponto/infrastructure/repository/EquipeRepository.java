@@ -1,8 +1,8 @@
-package dev.santosjonathan.controle_de_ponto.repository;
+package dev.santosjonathan.controle_de_ponto.infrastructure.repository;
 
-import dev.santosjonathan.controle_de_ponto.entity.Equipe;
-import dev.santosjonathan.controle_de_ponto.entity.Projeto;
-import dev.santosjonathan.controle_de_ponto.entity.Usuario;
+import dev.santosjonathan.controle_de_ponto.infrastructure.entity.Equipe;
+import dev.santosjonathan.controle_de_ponto.infrastructure.entity.Projeto;
+import dev.santosjonathan.controle_de_ponto.infrastructure.entity.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

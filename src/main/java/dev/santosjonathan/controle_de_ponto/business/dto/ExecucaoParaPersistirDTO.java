@@ -1,6 +1,4 @@
-package dev.santosjonathan.controle_de_ponto.dto;
-
-import dev.santosjonathan.controle_de_ponto.entity.Execucao;
+package dev.santosjonathan.controle_de_ponto.business.dto;
 
 import java.time.Instant;
 import java.util.UUID;

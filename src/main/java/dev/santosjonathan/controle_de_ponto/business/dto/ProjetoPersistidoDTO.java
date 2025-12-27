@@ -1,6 +1,6 @@
-package dev.santosjonathan.controle_de_ponto.dto;
+package dev.santosjonathan.controle_de_ponto.business.dto;
 
-import dev.santosjonathan.controle_de_ponto.entity.Equipe;
+import dev.santosjonathan.controle_de_ponto.infrastructure.entity.Equipe;
 
 import java.time.Instant;
 import java.util.Set;
