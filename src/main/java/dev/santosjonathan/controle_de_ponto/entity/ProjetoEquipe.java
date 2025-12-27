@@ -1,0 +1,33 @@
+package dev.santosjonathan.controle_de_ponto.entity;
+
+import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import java.io.Serializable;
+import java.time.Instant;
+import java.util.UUID;
+
+@Entity
+@Table(name = "projetos_equipes")
+public class ProjetoEquipe implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
+
+    @CreationTimestamp
+    private Instant criadoEm;
+
+    @UpdateTimestamp
+    private Instant atualizadoEm;
+
+    private Instant deletadoEm;
+
+    @ManyToOne
+    @JoinColumn(name = "id_equipe")
+    private Equipe equipe;
+
+    @ManyToOne
+    @JoinColumn(name = "id_projeto")
+    private Projeto projeto;
+}
